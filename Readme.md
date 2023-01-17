@@ -18,16 +18,15 @@ For example, when [Excel Seeder for Laravel](https://github.com/bfinlay/laravel-
 
 As another example, when working with `ST_GeomFromText()` between MySQL 8.0 vs MySQL 5.7 and Postgres, the order of latitude and longitude is different,
 and when switching between databases you might want your code base to work the same without changes.  MySQL 8.0 provides an option
-for `ST_GeomFromText()` to change the axis order. So while the grammar for Postgres will look like `ST_GeomFromText(?, ?)`,
-the grammar for MySql 8.0 will look like `ST_GeomFromText(?, ?, 'axis-order=long-lat')`.
+for `ST_GeomFromText()` to change the axis order. So while the grammar for Postgres will look like `ST_GeomFromText('POINT(1 2)', 4326)`,
+the grammar for MySql 8.0 will look like `ST_GeomFromText('POINT(1 2)', 4326, 'axis-order=long-lat')`.
 
 Creating an `Expression` with an `ExpressionGrammar` to support these three different grammars would look like this:
 ```php
-$grammar = ExpressionGrammar::make()
+$expression = ExpressionGrammar::make()
         ->mySql("ST_GeomFromText('POINT(1 2)', 4326)")
         ->mySql("ST_GeomFromText('POINT(1 2)', 4326, 'axis-order=long-lat')", "8.0")
         ->postgres("ST_GeomFromText('POINT(1 2)', 4326)");
-$expression = new Expression($grammar, [$lon, $lat]);
 ```
 This will resolve to the following expressions for the specified databases and versions:
 
@@ -61,7 +60,7 @@ Add an expression for SqlServer grammar.
 #### #`ExpressionGrammar->grammar($driver, $string, $version (optional))`
 
 Add an expression for grammar for other database drivers.  `$driver` should match the driver string used by the Laravel query builder driver.
-For example `$grammar->postgres("ST_GeomFromText(?, ?)")` is equivalent to `$grammar->grammar("pgsql", "ST_GeomFromText(?, ?)")`.
+For example `$grammar->postgres("ST_GeomFromText('POINT(1 2)', 4326)")` is equivalent to `$grammar->grammar("pgsql", "ST_GeomFromText('POINT(1 2)', 4326)")`.
 
 The `$version` parameter is optional.  When not specified, the grammar applies as the default.  When specified, the grammar applies to the specified version of the database or greater.
 
