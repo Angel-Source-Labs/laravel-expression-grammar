@@ -48,7 +48,7 @@ trait DatabaseConnections
         config(['database.default' => 'pgsql']);
         $app['config']->set('database.connections.pgsql.host', env('DB_HOST', '127.0.0.1'));
         $app['config']->set('database.connections.pgsql.port', env('DB_PORT', '54314'));
-        $app['config']->set('database.connections.pgsql.database', env('DB_DATABASE', ''));
+        $app['config']->set('database.connections.pgsql.database', env('DB_DATABASE', 'forge'));
         $app['config']->set('database.connections.pgsql.username', env('DB_USERNAME', 'postgres'));
         $app['config']->set('database.connections.pgsql.password', env('DB_PASSWORD', 'password'));
     }
