@@ -3,12 +3,12 @@ name: PHPUnit tests
 on:
   push:
     branches:
-      - master
+      - main
       - github-actions
       - test
   pull_request:
     branches:
-      - master
+      - main
       - test
   schedule:
     - cron: '0 5 * * 5'
