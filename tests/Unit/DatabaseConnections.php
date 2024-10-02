@@ -51,6 +51,7 @@ trait DatabaseConnections
         $app['config']->set('database.connections.pgsql.database', env('DB_DATABASE', 'forge'));
         $app['config']->set('database.connections.pgsql.username', env('DB_USERNAME', 'postgres'));
         $app['config']->set('database.connections.pgsql.password', env('DB_PASSWORD', 'password'));
+        $app['config']->set('database.connections.pgsql.schema', '');
     }
 
     protected function useSQLiteConnection($app)
